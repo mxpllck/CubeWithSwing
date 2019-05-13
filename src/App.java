@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import static java.awt.event.KeyEvent.VK_UP;
+import static java.awt.event.KeyEvent.VK_W;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class App {
@@ -24,15 +26,7 @@ public class App {
 		frame.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if ((e.getKeyChar() == 'w')) {
-					System.out.println("w key pressed.");
-				} else if (e.getKeyChar() == 'a') {
 
-				} else if (e.getKeyChar() == 's') {
-
-				} else if (e.getKeyChar() == 'd') {
-
-				}
 			}
 
 			@Override
@@ -42,7 +36,19 @@ public class App {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-
+				if ((e.getKeyCode() == VK_W)) {
+					System.out.println("w key released.");
+				}
+				//else if (e.getKeyChar() == 'a') {
+//
+//				} else if (e.getKeyChar() == 's')
+//
+//				} else if (e.getKeyChar() == 'd') {
+//
+//				}
+				else if (e.getKeyCode() == VK_UP) {
+					System.out.println("up arrow released");
+				}
 			}
 		});
 		int[] xCoord = {0, 0, 50, 50};
