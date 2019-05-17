@@ -83,6 +83,11 @@
 
 import javax.swing.*;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import static java.awt.event.KeyEvent.*;
+
 public class App extends JFrame {
 	public static void main(String[] args) {
 		//JFrame.setDefaultLookAndFeelDecorated(true);
@@ -94,5 +99,63 @@ public class App extends JFrame {
 		setSize(400, 400);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+
+		addKeyListener(new KeyListener() {
+			//these two are empty and do not trigger anything.
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+
+			//keyReleased is overridden to allow for movement and panning controls.
+			@Override
+			public void keyReleased(KeyEvent e) {
+				releasedKey(e);
+			}
+		});
+	}
+
+	//used for overloading KeyListener.keyReleased() for a specific instance in the App constructor.
+	private void releasedKey(KeyEvent e) {
+		if ((e.getKeyCode() == VK_W)) {
+			System.out.println("w key released.");
+			//add(square);
+			revalidate();
+			repaint();
+		} else if (e.getKeyCode() == VK_S) {
+			System.out.println("s key released.");
+			//add(square);
+			revalidate();
+			repaint();
+		} else if (e.getKeyCode() == VK_A) {
+			System.out.println("a key released.");
+			//add(square);
+			revalidate();
+			repaint();
+		} else if (e.getKeyCode() == VK_D) {
+			System.out.println("d key released.");
+			//add(square);
+			revalidate();
+			repaint();
+		} else if (e.getKeyCode() == VK_UP) {
+			System.out.println("up arrow released");
+			//remove(square);
+			repaint();
+		} else if (e.getKeyCode() == VK_DOWN) {
+			System.out.println("down arrow released");
+			//remove(square);
+			repaint();
+		} else if (e.getKeyCode() == VK_LEFT) {
+			System.out.println("left arrow released");
+			//remove(square);
+			repaint();
+		} else if (e.getKeyCode() == VK_RIGHT) {
+			System.out.println("right arrow released");
+			//remove(square);
+			repaint();
+		}
 	}
 }
