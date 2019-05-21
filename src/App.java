@@ -65,32 +65,15 @@
 //    }
 //}
 //
-//class Poly extends JPanel {
-//	private int[] x;
-//	private int[] y;
-//
-//	Poly(int[] xCoords, int[] yCoords) {
-//		x = xCoords;
-//		y = yCoords;
-//    }
-//    void update(int[] cubeXCoords, int[] cubeYCoords, int[] cubeZCoords, int[] playerXYZ, int[] playerAngle){
-//
-//	}
-//    public void paint(Graphics g){
-//        g.drawPolygon(x, y, 4);
-//    }
-//}
 
 import javax.swing.*;
-
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import static java.awt.event.KeyEvent.*;
 
 public class App extends JFrame {
 	public static void main(String[] args) {
-		//JFrame.setDefaultLookAndFeelDecorated(true);
 		App app = new App();
 	}
 
@@ -116,46 +99,65 @@ public class App extends JFrame {
 				releasedKey(e);
 			}
 		});
+		Cube cube = new Cube();
+		add(cube);
+
 	}
 
 	//used for overloading KeyListener.keyReleased() for a specific instance in the App constructor.
 	private void releasedKey(KeyEvent e) {
 		if ((e.getKeyCode() == VK_W)) {
 			System.out.println("w key released.");
-			//add(square);
 			revalidate();
 			repaint();
 		} else if (e.getKeyCode() == VK_S) {
 			System.out.println("s key released.");
-			//add(square);
 			revalidate();
 			repaint();
 		} else if (e.getKeyCode() == VK_A) {
 			System.out.println("a key released.");
-			//add(square);
 			revalidate();
 			repaint();
 		} else if (e.getKeyCode() == VK_D) {
 			System.out.println("d key released.");
-			//add(square);
 			revalidate();
 			repaint();
 		} else if (e.getKeyCode() == VK_UP) {
 			System.out.println("up arrow released");
-			//remove(square);
+			revalidate();
 			repaint();
 		} else if (e.getKeyCode() == VK_DOWN) {
 			System.out.println("down arrow released");
-			//remove(square);
+			revalidate();
 			repaint();
 		} else if (e.getKeyCode() == VK_LEFT) {
 			System.out.println("left arrow released");
-			//remove(square);
+			revalidate();
 			repaint();
 		} else if (e.getKeyCode() == VK_RIGHT) {
 			System.out.println("right arrow released");
-			//remove(square);
+			revalidate();
 			repaint();
 		}
+	}
+}
+
+//holds cube coordinates, the update function changes displayX and displayY in keeping with the player angle and movement
+class Cube extends JPanel {
+	//hidden coords for the 3d cube
+	private int[] cubeX = {0, 100, 100, 0,};
+	private int[] cubeY = {0, 0, 100, 100,};
+	private int[] cubeZ = {0, 0, 0, 0, 100, 100, 100, 100};
+
+	//available for printing onto a 2d screen; this is the projection
+	private int[] displayX = {0, 100, 100, 0,};
+	private int[] displayY = {0, 0, 100, 100,};
+
+	void update(int[] playerXYZ, int[] playerAngle) {
+
+	}
+
+	public void paint(Graphics g) {
+		g.drawPolygon(displayX, displayY, 4);
 	}
 }
