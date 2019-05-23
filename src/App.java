@@ -108,37 +108,23 @@ public class App extends JFrame {
 	private void releasedKey(KeyEvent e) {
 		if ((e.getKeyCode() == VK_W)) {
 			System.out.println("w key released.");
-			revalidate();
-			repaint();
 		} else if (e.getKeyCode() == VK_S) {
 			System.out.println("s key released.");
-			revalidate();
-			repaint();
 		} else if (e.getKeyCode() == VK_A) {
 			System.out.println("a key released.");
-			revalidate();
-			repaint();
 		} else if (e.getKeyCode() == VK_D) {
 			System.out.println("d key released.");
-			revalidate();
-			repaint();
 		} else if (e.getKeyCode() == VK_UP) {
 			System.out.println("up arrow released");
-			revalidate();
-			repaint();
 		} else if (e.getKeyCode() == VK_DOWN) {
 			System.out.println("down arrow released");
-			revalidate();
-			repaint();
 		} else if (e.getKeyCode() == VK_LEFT) {
 			System.out.println("left arrow released");
-			revalidate();
-			repaint();
 		} else if (e.getKeyCode() == VK_RIGHT) {
 			System.out.println("right arrow released");
-			revalidate();
-			repaint();
 		}
+		revalidate();
+		repaint();
 	}
 }
 
@@ -153,11 +139,16 @@ class Cube extends JPanel {
 	private int[] displayX = {0, 100, 100, 0,};
 	private int[] displayY = {0, 0, 100, 100,};
 
-	void update(int[] playerXYZ, int[] playerAngle) {
+	void update(Player player) {
 
 	}
 
 	public void paint(Graphics g) {
 		g.drawPolygon(displayX, displayY, 4);
 	}
+}
+
+class Player {
+	public int[] playerXYZ = {0, 0, 0};
+	public int[] playerDirXYZ = {0, 1, 0};
 }
