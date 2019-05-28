@@ -18,6 +18,7 @@ public class App extends JFrame {
 		setVisible(true);
 		Cube cube = new Cube();
 		add(cube);
+		Player player = new Player();
 		addKeyListener(new KeyListener() {
 			//these two are empty and do not trigger anything.
 			@Override
