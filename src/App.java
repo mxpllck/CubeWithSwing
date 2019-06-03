@@ -32,34 +32,11 @@ public class App extends JFrame {
 			//keyReleased is overridden to allow for movement and panning controls.
 			@Override
 			public void keyReleased(KeyEvent e) {
-				releasedKey(e);
+				player.update(e);
+				revalidate();
+				repaint();
 			}
 		});
-	}
-
-	//used for overloading KeyListener.keyReleased() for a specific instance in the App constructor.
-	private void releasedKey(KeyEvent e) {
-		if ((e.getKeyCode() == VK_W)) {
-			System.out.println("w key released.");
-
-		} else if (e.getKeyCode() == VK_S) {
-			System.out.println("s key released.");
-		} else if (e.getKeyCode() == VK_A) {
-			System.out.println("a key released.");
-		} else if (e.getKeyCode() == VK_D) {
-			System.out.println("d key released.");
-		} else if (e.getKeyCode() == VK_UP) {
-			System.out.println("up arrow released");
-		} else if (e.getKeyCode() == VK_DOWN) {
-			System.out.println("down arrow released");
-		} else if (e.getKeyCode() == VK_LEFT) {
-			System.out.println("left arrow released");
-		} else if (e.getKeyCode() == VK_RIGHT) {
-			System.out.println("right arrow released");
-		}
-
-		revalidate();
-		repaint();
 	}
 }
 
@@ -82,11 +59,10 @@ class Cube extends JPanel {
 	private int[] displayX = relativeXCoords;
 	private int[] displayZ = relativeYCoords;
 
-
-	//adjusts display coordinates
+	//adjusts display coordinates for the cube
 	void update(Player player) {
 		for (int i = 0; i < 8; ++i)
-			relativeXCoords[0] = objectiveXCoords[0] - player.playerXYZ[0];
+			relativeXCoords[0] = objectiveXCoords[0] - player.XYZ[0];
 		//for each point within acceptable range:
 		//it updates the point positions, or else puts offscreen
 
@@ -106,6 +82,32 @@ class Cube extends JPanel {
 }
 
 class Player {
-	int[] playerXYZ = {0, 0, 0};
-	int[] playerDirXYZ = {0, 1, 0};
+	int[] XYZ = {0, 0, 0};
+	private int[] dirXYZ = {0, 1, 0};
+
+	void update(KeyEvent e) {
+		if ((e.getKeyCode() == VK_W)) {
+			for (int i = 0; i < 3; ++i)
+				XYZ[i] += dirXYZ[i];
+			System.out.println("w key released.  Cordinates are: " + XYZ[0] + ", " + XYZ[1] + " & " + XYZ[2]);
+		} else if (e.getKeyCode() == VK_S) {
+			for (int i = 0; i < 3; ++i)
+				XYZ[i] -= dirXYZ[i];
+			System.out.println("s key released.  Cordinates are: " + XYZ[0] + ", " + XYZ[1] + " & " + XYZ[2]);
+		} else if (e.getKeyCode() == VK_A) {
+			//XYZ[0]+=dirXYZ[1];XYZ[1]-=dirXYZ[1];XYZ[2]+=dirXYZ[2];
+			System.out.println("a key released.  Cordinates are: " + XYZ[0] + ", " + XYZ[1] + " & " + XYZ[2]);
+		} else if (e.getKeyCode() == VK_D) {
+			//XYZ[0]-=dirXYZ[0];XYZ[1]+=dirXYZ[1];XYZ[2]+=dirXYZ[2];
+			System.out.println("d key released.  Cordinates are: " + XYZ[0] + ", " + XYZ[1] + " & " + XYZ[2]);
+		} else if (e.getKeyCode() == VK_UP) {
+			System.out.println("up arrow released");
+		} else if (e.getKeyCode() == VK_DOWN) {
+			System.out.println("down arrow released");
+		} else if (e.getKeyCode() == VK_LEFT) {
+			System.out.println("left arrow released");
+		} else if (e.getKeyCode() == VK_RIGHT) {
+			System.out.println("right arrow released");
+		}
+	}
 }
