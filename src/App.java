@@ -83,7 +83,9 @@ class Cube extends JPanel {
 
 class Player {
 	int[] XYZ = {0, 0, 0};
-	private int[] dirXYZ = {0, 1, 0};
+	private int[] dirXYZ = {0, 0, 1};
+	//stores the direction it was pointing so it can be returned to when one looks away from the sky or the ground.
+	private int[] XYInclination = {0, 1};
 
 	void update(KeyEvent e) {
 		if ((e.getKeyCode() == VK_W)) {
@@ -95,19 +97,72 @@ class Player {
 				XYZ[i] -= dirXYZ[i];
 			System.out.println("s key released.  Cordinates are: " + XYZ[0] + ", " + XYZ[1] + " & " + XYZ[2]);
 		} else if (e.getKeyCode() == VK_A) {
-			//XYZ[0]+=dirXYZ[1];XYZ[1]-=dirXYZ[1];XYZ[2]+=dirXYZ[2];
+			XYZ[0] -= dirXYZ[1];
+			XYZ[1] += dirXYZ[0];
 			System.out.println("a key released.  Cordinates are: " + XYZ[0] + ", " + XYZ[1] + " & " + XYZ[2]);
 		} else if (e.getKeyCode() == VK_D) {
-			//XYZ[0]-=dirXYZ[0];XYZ[1]+=dirXYZ[1];XYZ[2]+=dirXYZ[2];
+			XYZ[0] += dirXYZ[1];
+			XYZ[1] -= dirXYZ[0];
 			System.out.println("d key released.  Cordinates are: " + XYZ[0] + ", " + XYZ[1] + " & " + XYZ[2]);
 		} else if (e.getKeyCode() == VK_UP) {
-			System.out.println("up arrow released");
+			//these 3 if-statements wont have any effect if the player is already looking up.
+			if ((dirXYZ[2] <= 0)) {
+				++dirXYZ[2];
+			}
+			if (dirXYZ[2] == 1) {
+				dirXYZ[0] = 0;
+				dirXYZ[1] = 0;
+			}
+			if (dirXYZ[2] == 0) {
+				//restore XY look direction
+				dirXYZ[0] = XYInclination[0];
+				dirXYZ[1] = XYInclination[1];
+			}
+			System.out.println("up arrow released.  Look direction is: " + dirXYZ[0] + ", " + dirXYZ[1] + " & " + dirXYZ[2]);
 		} else if (e.getKeyCode() == VK_DOWN) {
-			System.out.println("down arrow released");
+			//these 3 if-statements wont have any effect if the player is already looking down.
+			if ((dirXYZ[2] >= 0)) {
+				--dirXYZ[2];
+			}
+			if (dirXYZ[2] == -1) {
+				dirXYZ[0] = 0;
+				dirXYZ[1] = 0;
+			}
+			if (dirXYZ[2] == 0) {
+				//restore XY look direction
+				dirXYZ[0] = XYInclination[0];
+				dirXYZ[1] = XYInclination[1];
+			}
+			System.out.println("down arrow released.  Look direction is: " + dirXYZ[0] + ", " + dirXYZ[1] + " & " + dirXYZ[2]);
 		} else if (e.getKeyCode() == VK_LEFT) {
-			System.out.println("left arrow released");
+			//these 3 if-statements wont have any effect if the player is already looking left.
+			//if looking at the flat plane
+			if (dirXYZ[2] == 0) {
+				if ((dirXYZ[0] >= 0)) {
+					--dirXYZ[0];
+				}
+				if (dirXYZ[0] == -1) {
+					dirXYZ[1] = 0;
+				}
+				//restore Y look direction
+				dirXYZ[1] = XYInclination[1];
+			}
+			System.out.println("left arrow released.  Look direction is: " + dirXYZ[0] + ", " + dirXYZ[1] + " & " + dirXYZ[2]);
 		} else if (e.getKeyCode() == VK_RIGHT) {
-			System.out.println("right arrow released");
+			//these 3 if-statements wont have any effect if the player is already looking right.
+			//if looking at the flat plane:
+			if (dirXYZ[2] == 0) {
+				if ((dirXYZ[0] <= 0)) {
+					++dirXYZ[0];
+				}
+				if (dirXYZ[0] == 1) {
+					dirXYZ[1] = 0;
+				}
+				//restore Y look direction
+				dirXYZ[1] = XYInclination[1];
+			}
+			System.out.println("right arrow released.  Look direction is: " + dirXYZ[0] + ", " + dirXYZ[1] + " & " + dirXYZ[2]);
 		}
 	}
+	//1, 0, 0 // 0, 1, 0 // 0, 0, 1 // -1, 0, 0 // 0, -1, 0 // 0, 0, -1
 }
