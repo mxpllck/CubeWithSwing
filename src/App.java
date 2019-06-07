@@ -32,7 +32,11 @@ public class App extends JFrame {
 			//keyReleased is overridden to allow for movement and panning controls.
 			@Override
 			public void keyReleased(KeyEvent e) {
+				//updates look angle and movement
 				player.update(e);
+				//enables cube redrawing in the data
+				cube.update(player);
+				//puts redraw on screen
 				revalidate();
 				repaint();
 			}
@@ -61,14 +65,19 @@ class Cube extends JPanel {
 
 	//adjusts display coordinates for the cube
 	void update(Player player) {
-		for (int i = 0; i < 8; ++i)
-			relativeXCoords[0] = objectiveXCoords[0] - player.XYZ[0];
+		for (int i = 0; i < 8; ++i) {
+			relativeXCoords[i] = objectiveXCoords[i] - player.XYZ[i];
+			relativeYCoords[i] = objectiveYCoords[i] - player.XYZ[i];
+			relativeZCoords[i] = objectiveZCoords[i] - player.XYZ[i];
+		}
 		//for each point within acceptable range:
 		//it updates the point positions, or else puts offscreen
 
 	}
 
+	//this is called automatically by repaint() or revalidate() function.
 	public void paint(Graphics g) {
+		//prepares component for drawing
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		// Assume x, y, and diameter are instance variables.
@@ -83,7 +92,7 @@ class Cube extends JPanel {
 
 class Player {
 	int[] XYZ = {0, 0, 0};
-	private int[] dirXYZ = {0, 0, 1};
+	private int[] dirXYZ = {0, 1, 0};
 	//stores the direction it was pointing so it can be returned to when one looks away from the sky or the ground.
 	private int[] XYInclination = {0, 1};
 
@@ -144,12 +153,16 @@ class Player {
 				if (dirXYZ[0] == -1) {
 					dirXYZ[1] = 0;
 				}
-				//restore Y look direction
-				dirXYZ[1] = XYInclination[1];
+				if (dirXYZ[0] == 0) {
+					dirXYZ[1] = 1;
+				}
+				//saves
+				XYInclination[0] = dirXYZ[0];
+				XYInclination[1] = dirXYZ[1];
 			}
 			System.out.println("left arrow released.  Look direction is: " + dirXYZ[0] + ", " + dirXYZ[1] + " & " + dirXYZ[2]);
 		} else if (e.getKeyCode() == VK_RIGHT) {
-			//these 3 if-statements wont have any effect if the player is already looking right.
+			//these if-statements wont have any effect if the player is already looking right.
 			//if looking at the flat plane:
 			if (dirXYZ[2] == 0) {
 				if ((dirXYZ[0] <= 0)) {
@@ -158,8 +171,12 @@ class Player {
 				if (dirXYZ[0] == 1) {
 					dirXYZ[1] = 0;
 				}
-				//restore Y look direction
-				dirXYZ[1] = XYInclination[1];
+				if (dirXYZ[0] == 0) {
+					dirXYZ[1] = 1;
+				}
+				//save XY coords
+				XYInclination[0] = dirXYZ[0];
+				XYInclination[1] = dirXYZ[1];
 			}
 			System.out.println("right arrow released.  Look direction is: " + dirXYZ[0] + ", " + dirXYZ[1] + " & " + dirXYZ[2]);
 		}
