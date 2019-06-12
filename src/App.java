@@ -65,10 +65,12 @@ class Cube extends JPanel {
 
 	//adjusts display coordinates for the cube
 	void update(Player player) {
-		relativeXCoords[0] = objectiveXCoords[0] - player.XYZ[0];
-		relativeYCoords[1] = objectiveYCoords[1] - player.XYZ[1];
-		relativeZCoords[2] = objectiveZCoords[2] - player.XYZ[2];
-
+		//evaluates for coordinates relative to the player
+		for(int i = 0; i < 8; ++i) {
+			relativeXCoords[i] = objectiveXCoords[i] - player.XYZ[0];
+			relativeYCoords[i] = objectiveYCoords[i] - player.XYZ[1];
+			relativeZCoords[i] = objectiveZCoords[i] - player.XYZ[2];
+		}
 		//for each point within acceptable range:
 		//it updates the point positions, or else puts offscreen
 
