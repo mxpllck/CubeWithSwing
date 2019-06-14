@@ -74,7 +74,32 @@ class Cube extends JPanel {
 		for (int i = 0; i < 8; ++i){
 			System.out.println("point "+i+": ("+relativeXCoords[i]+", "+relativeYCoords[i]+", "+relativeZCoords[i]+")");
 		}
-		//now updates display coordinates
+		//now updates display coordinates.  -1 is a non-display value
+		if(player.dirXYZ[0]==1) {
+			for (int i = 0; i < 8; ++i) {
+
+			}
+		}
+		else if(player.dirXYZ[0]==-1){
+			for (int i = 0; i < 8; ++i) {
+			}
+		}
+		else if(player.dirXYZ[1]==1){
+			for (int i = 0; i < 8; ++i) {
+			}
+		}
+		else if(player.dirXYZ[1]==-1){
+			for (int i = 0; i < 8; ++i) {
+			}
+		}
+		else if(player.dirXYZ[2]==1){
+			for (int i = 0; i < 8; ++i) {
+			}
+		}
+		else if(player.dirXYZ[2]==-1){
+			for (int i = 0; i < 8; ++i) {
+			}
+		}
 	}
 
 	//redraws cube using display coordinates
@@ -85,20 +110,16 @@ class Cube extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		// Assume x, y, and diameter are instance variables.
 		Ellipse2D.Double[] circles = new Ellipse2D.Double[8];
-
 		for(int i = 0; i < 8; i++){
-			circles[i] = new Ellipse2D.Double(20*i, 200, 10, 10);
+			circles[i] = new Ellipse2D.Double(displayX[i], displayZ[i], 10, 10);
 			g2d.fill(circles[i]);
 		}
-		//Ellipse2D.Double circle = new Ellipse2D.Double(100, 200, 10, 10);
-		//g2d.fill(circle);
-		//Ellipse2D.Double[] circle = new Ellipse2D.Double[8];
 	}
 }
 
 class Player {
 	int[] XYZ = {0, 0, 0};
-	private int[] dirXYZ = {0, 1, 0};
+	int[] dirXYZ = {0, 1, 0};
 	//stores the direction it was pointing so it can be returned to when one looks away from the sky or the ground.
 	private int[] XYInclination = {0, 1};
 
