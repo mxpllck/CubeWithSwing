@@ -5,6 +5,8 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 
 import static java.awt.event.KeyEvent.*;
+import static java.lang.Math.abs;
+import static java.lang.Math.round;
 
 public class App extends JFrame {
 	public static void main(String[] args) {
@@ -77,42 +79,100 @@ class Cube extends JPanel {
 		//now updates display coordinates.  -1 is a non-display value
 		if(player.dirXYZ[0]==1) {
 			for (int i = 0; i < 8; ++i) {
-
+				if((relativeXCoords[i]>0)&&(abs(relativeXCoords[i])>abs(relativeYCoords[i]))&&(abs(relativeXCoords[i])>abs(relativeZCoords[i]))){
+					displayX[i]=200-round( ((float)relativeYCoords[i]/relativeXCoords[i])*400 );
+					displayZ[i]=200-round( ((float)relativeZCoords[i]/relativeXCoords[i])*400 );
+					//System.out.println("fractions: "+displayX[i]+", "+displayZ[i]);
+				}
+				else{
+					displayX[i]=-1;
+					displayZ[i]=-1;
+					//System.out.println("negatives: "+displayX[i]+", "+displayZ[i]);
+				}
 			}
 		}
 		else if(player.dirXYZ[0]==-1){
 			for (int i = 0; i < 8; ++i) {
+				if((relativeXCoords[i]<0)&&(abs(relativeXCoords[i])>abs(relativeYCoords[i]))&&(abs(relativeXCoords[i])>abs(relativeZCoords[i]))){
+					displayX[i]=200-round( ((float)relativeYCoords[i]/-relativeXCoords[i])*400);
+					displayZ[i]=200-round( ((float)relativeZCoords[i]/-relativeXCoords[i])*400);
+//					System.out.println("fractions: "+displayX[i]+", "+displayZ[i]);
+				}
+				else{
+					displayX[i]=-1;
+					displayZ[i]=-1;
+//					System.out.println("negatives: "+displayX[i]+", "+displayZ[i]);
+				}
 			}
 		}
 		else if(player.dirXYZ[1]==1){
 			for (int i = 0; i < 8; ++i) {
+				if((relativeYCoords[i]>0)&&(abs(relativeYCoords[i])>abs(relativeXCoords[i]))&&(abs(relativeYCoords[i])>abs(relativeZCoords[i]))){
+					displayX[i]=200-round( ((float)relativeXCoords[i]/relativeYCoords[i])*400);
+					displayZ[i]=200-round( ((float)relativeZCoords[i]/relativeYCoords[i])*400);
+//					System.out.println("fractions: "+displayX[i]+", "+displayZ[i]);
+				}
+				else{
+					displayX[i]=-1;
+					displayZ[i]=-1;
+//					System.out.println("negatives: "+displayX[i]+", "+displayZ[i]);
+				}
 			}
 		}
 		else if(player.dirXYZ[1]==-1){
 			for (int i = 0; i < 8; ++i) {
+				if((relativeYCoords[i]<0)&&(abs(relativeYCoords[i])>abs(relativeXCoords[i]))&&(abs(relativeYCoords[i])>abs(relativeZCoords[i]))){
+					displayX[i]=200-round( ((float)relativeXCoords[i]/-relativeYCoords[i])*400);
+					displayZ[i]=200-round( ((float)relativeZCoords[i]/-relativeYCoords[i])*400);
+//					System.out.println("fractions: "+displayX[i]+", "+displayZ[i]);
+				}
+				else{
+					displayX[i]=-1;
+					displayZ[i]=-1;
+//					System.out.println("negatives: "+displayX[i]+", "+displayZ[i]);
+				}
 			}
 		}
 		else if(player.dirXYZ[2]==1){
 			for (int i = 0; i < 8; ++i) {
+				if((relativeZCoords[i]>0)&&(abs(relativeYCoords[i])>abs(relativeXCoords[i]))&&(abs(relativeYCoords[i])>abs(relativeZCoords[i]))){
+					displayX[i]=200-round( ((float)relativeXCoords[i]/relativeZCoords[i])*400);
+					displayZ[i]=200-round( ((float)relativeYCoords[i]/relativeZCoords[i])*400);
+//					System.out.println("fractions: "+displayX[i]+", "+displayZ[i]);
+				}
+				else{
+					displayX[i]=-1;
+					displayZ[i]=-1;
+//					System.out.println("negatives: "+displayX[i]+", "+displayZ[i]);
+				}
 			}
 		}
 		else if(player.dirXYZ[2]==-1){
 			for (int i = 0; i < 8; ++i) {
+				if((relativeZCoords[i]<0)&&(abs(relativeYCoords[i])>abs(relativeXCoords[i]))&&(abs(relativeYCoords[i])>abs(relativeZCoords[i]))){
+					displayX[i]=200-round( ((float)relativeXCoords[i]/-relativeZCoords[i])*400);
+					displayZ[i]=200-round( ((float)relativeYCoords[i]/-relativeZCoords[i])*400);
+//					System.out.println("fractions: "+displayX[i]+", "+displayZ[i]);
+				}
+				else{
+					displayX[i]=-1;
+					displayZ[i]=-1;
+//					System.out.println("negatives: "+displayX[i]+", "+displayZ[i]);
+				}
 			}
 		}
 	}
-
 	//redraws cube using display coordinates
 	//this is called automatically by repaint() or revalidate() function.
 	public void paint(Graphics g) {
 		//prepares component for drawing
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		// Assume x, y, and diameter are instance variables.
 		Ellipse2D.Double[] circles = new Ellipse2D.Double[8];
 		for(int i = 0; i < 8; i++){
 			circles[i] = new Ellipse2D.Double(displayX[i], displayZ[i], 10, 10);
-			g2d.fill(circles[i]);
+			if(displayZ[i]!=-1)
+				g2d.fill(circles[i]);
 		}
 	}
 }
