@@ -50,18 +50,18 @@ class Cube extends JPanel {
 	//first square: (0, 0, 0), (0, 100, 0), (100, 100, 0), (100, 0, 0)
 	//second square: (0, 0, 100), (0, 100, 0), (100, 100, 0), (100, 0, 0)
 
-	private final int[] objectiveXCoords = {0, 0, 100, 100, 0, 0, 100, 100};
-	private final int[] objectiveYCoords = {0, 100, 100, 0, 0, 100, 100, 0};
-	private final int[] objectiveZCoords = {0, 0, 0, 0, 100, 100, 100, 100};
+	private final int[] objectiveXCoords = {0, 0,  10, 10, 0,  0,  10, 10};
+	private final int[] objectiveYCoords = {0, 10, 10, 0,  0,  10, 10, 0};
+	private final int[] objectiveZCoords = {0, 0,  0,  0,  10, 10, 10, 10};
 
 
-	private int[] relativeXCoords = objectiveXCoords;
-	private int[] relativeYCoords = objectiveYCoords;
-	private int[] relativeZCoords = objectiveZCoords;
+	private int[] relativeXCoords = {0, 0, 0, 0, 0, 0, 0, 0};
+	private int[] relativeYCoords = {0, 0, 0, 0, 0, 0, 0, 0};
+	private int[] relativeZCoords = {0, 0, 0, 0, 0, 0, 0, 0};
 
 	//available for printing onto a 2d screen; this is the projection
-	private int[] displayX = relativeXCoords;
-	private int[] displayZ = relativeYCoords;
+	private int[] displayX = {0, 0, 0, 0, 0, 0, 0, 0};
+	private int[] displayZ = {0, 0, 0, 0, 0, 0, 0, 0};
 
 	//adjusts display coordinates for the cube
 	void update(Player player) {
@@ -71,23 +71,28 @@ class Cube extends JPanel {
 			relativeYCoords[i] = objectiveYCoords[i] - player.XYZ[1];
 			relativeZCoords[i] = objectiveZCoords[i] - player.XYZ[2];
 		}
-		//for each point within acceptable range:
-		//it updates the point positions, or else puts offscreen
-
+		for (int i = 0; i < 8; ++i){
+			System.out.println("point "+i+": ("+relativeXCoords[i]+", "+relativeYCoords[i]+", "+relativeZCoords[i]+")");
+		}
+		//now updates display coordinates
 	}
 
+	//redraws cube using display coordinates
 	//this is called automatically by repaint() or revalidate() function.
 	public void paint(Graphics g) {
 		//prepares component for drawing
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		// Assume x, y, and diameter are instance variables.
-		Ellipse2D.Double[] circles;
-		//for(int i = 0; i < 8; i++)
+		Ellipse2D.Double[] circles = new Ellipse2D.Double[8];
+
+		for(int i = 0; i < 8; i++){
+			circles[i] = new Ellipse2D.Double(20*i, 200, 10, 10);
+			g2d.fill(circles[i]);
+		}
 		//Ellipse2D.Double circle = new Ellipse2D.Double(100, 200, 10, 10);
 		//g2d.fill(circle);
-		Ellipse2D.Double circle = new Ellipse2D.Double(100, 200, 10, 10);
-		g2d.fill(circle);
+		//Ellipse2D.Double[] circle = new Ellipse2D.Double[8];
 	}
 }
 
